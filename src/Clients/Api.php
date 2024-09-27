@@ -1,5 +1,6 @@
 <?php
-class ManegeApiHttps implements ManegeApiHttpsInterface
+
+class Api implements TelegramInterface
 {
     private string $keepTokenBot;
     public static array $configCurl = [CURLOPT_RETURNTRANSFER => true];
@@ -10,11 +11,10 @@ class ManegeApiHttps implements ManegeApiHttpsInterface
         $this->keepTokenBot = "https://api.telegram.org/bot$botToken/";
     }
 
-
     
     public function Get(string $method, array|string $params = "") : CurlHandle 
     {
-        $params = is_array( $params ) ? http_build_query( $params ) : $params;
+        $params = is_array($params) ? http_build_query($params) : $params;
         $curlObject = curl_init( $this->keepTokenBot . "$method?$params" );
         curl_setopt_array( $curlObject, self::$configCurl );
         return $curlObject;
